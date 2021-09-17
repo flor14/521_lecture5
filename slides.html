@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>DSCI 521 - Lecture 4</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="MDS 2021/22" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+
+
+
+class: middle, center
+
+&lt;img src="img/hex.png" width="150" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+class: bottom
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+### DSCI 521 - Lecture 4
+### **Time travelling with git reset, and pattern matching with regex**
+
+ .large[#### Computing Platforms for Data Science - UBC MDS 2021/22
+]]
+
+
+---
+
+## Lecture 4
+
+1. Use git reset to move a branch back in the commit history.
+
+--
+
+2. Precisely match specific sequences of text strings using regex.
+
+
+---
+
+class: center, middle, inverse
+
+# TIME TRAVELLING
+### with _git reset_
+
+---
+
+### Refer to a commit 
+
+Commit ID or SHA-1 hash
+
+```bash
+commit b22d6421363c7b82e2b88b0b5f1f25edca703303
+
+commit b22d
+```
+
+--
+
+## `git log --oneline` 
+
+&lt;img src="img/gitlogid.png" width="700" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Move to a previous commit
+
+```bash
+git reset &lt;commit id&gt;
+```
+
+**(1) This command changes the commit history**
+
+.footnote[[Git Docs - Reset, restore and revert](https://git-scm.com/docs/git)]
+
+---
+
+### What happened to the changes? 
+
+**(2) You can edit the changes**
+
+We could now make any modification we wish and then commit again 
+
+&lt;img src="img/reset.png" width="700" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+### What if we want to discard the changes instead of moving them to the working area?
+
+```bash
+git reset --hard &lt;sha&gt;
+```
+It will not show us any message, since the changes are not unstaged, they are **discarded**.
+
+---
+
+class: middle, center, inverse
+
+## SYNCING WITH A REMOTE AFTER RESETTING
+
+
+---
+
+### Git push
+
+##### Git will refuse to push changes when the remote is ahead of the local branch.
+
+
+&lt;img src="img/gitpusherror.png" width="700" style="display: block; margin: auto;" /&gt;
+
+To override this warning and force git to push to the remote
+we can use the **-f/--force** flag.
+---
+
+## Danger Zone
+
+```bash
+git push -f/--force 
+```
+
+--
+- Should never do this on the `main` branch of a repository that you **share with collaborators** unless you have all discussed this
+
+--
+
+- Everyone else who is using this repository are now **out of sync** with the `main` branch, since you have reset master to a previous state
+
+--
+
+**Safer**
+: If you are working alone and you know what you are doing
+
+
+---
+class: middle, center, inverse
+ 
+# INTRODUCTION TO 
+# REGULAR EXPRESIONS 
+### regex
+
+---
+
+# .*
+
+### A regular expression, often abbreviated to **regex**, is a method of using a sequence of characters to define a search to match strings, i.e. “find and replace”-like operations. 
+
+
+
+.footnote[[Library Carpentries](https://librarycarpentry.org/lc-data-intro/01-regular-expressions/)]
+---
+
+## JupyterLab and VS Code have built in regex functionality 
+(Ctrl + F)
+
+
+#### VSCode
+
+
+&lt;img src="img/regex.png" width="500" style="display: block; margin: auto;" /&gt;
+#### JupyterLab 
+&lt;img src="img/jupyterLab.png" width="500" style="display: block; margin: auto;" /&gt;
+
+---
+
+## The square brackets: []
+
+If you want to specify the set of possible characters you can use square brackets []
+
+
+`[Aa]`pple 
+
+
+
+--
+
+
+#### - Find all the pairs of vowels in the fruit list.
+
+
+
+.footnote[[Answers in Lecture4](https://pages.github.ubc.ca/mds-2021-22/DSCI_521_platforms-dsci_students/README.html)]
+
+---
+
+## Ranges within []
+
+You can also define ranges when using brackets. 
+
+--
+
+`[A-Z]`: will match any upper case letter  
+`[a-z]`: will match any lower case letter  
+`[0-9]`: will match any digit  
+`[0-5]`: will match any digit between 0 and 5  
+
+--
+
+.footnote[[Order based in ASCII](https://en.wikipedia.org/wiki/ASCII#Printable_characters)]
+
+---
+
+## Ranges within []
+
+You can use square brackets starting with a caret. 
+
+`[^A-Z]`: will match anything that is not an upper case letter  
+`[^0-9]`: will match anything that is not a digit
+
+
+--
+
+.footnote[Note that the caret needs to be inside the bracket, if it is outside it will match the beginning of a line as described under the "Anchors" section below.]
+
+---
+
+## Ranges within []
+
+You can combine ranges: `[A-Za-z]`.   
+
+#### - What is the difference between writing `[A-Za-z]` and `[A-z]`?
+
+--
+
+```
+!"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
+abcdefghijklmnopqrstuvwxyz{|}~ 
+```
+&gt; These ranges are ordered based on ASCI codes where every character is represented by a number.  
+&gt; The first character in the list is  (space) and the last is ~ (tilde). 
+
+
+ `[A-z]` will also match the characters `[/]^_`, as you can see in the list above.  
+
+---
+
+## Special matching characters
+
+**.** can be used to match any character in the list above
+
+--
+
+To match a **.**  prefacing it with a backslash `\.`
+
+`\w`, which matches any character that normally occurs   
+inside a word (`[A-Za-z0-9_]`)
+
+
+
+
+---
+
+## Anchors
+
+- The **^** (caret) outside the brackets means beginning of line.
+- The dollar sign **$** means end of line
+
+Another useful anchor is `\b`, which matches end of word.
+
+--
+
+&gt; Start with power (^) and end with money ($)   
+&gt; _Jenny Bryan_
+
+
+---
+
+
+&lt;img src="img/regex.jpg" width="500" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+
+## Repetitions
+
+To match multiple of the same character, you can either repeat it or use the following syntax:
+
+`{n}`: exactly n occurrences  
+`{n,}`: at least n occurrences  
+`{0,m}`: at most m occurrences  
+`{n,m}`: between n and m (inclusive) occurrences  
+
+--
+
+#### - Find the fruits with names between 10 and 12 characters.
+#### - Find the lines with no more than 4 letters
+
+---
+
+
+## Special repetition characters
+
+There are some shortcuts for the most common repetitions:  
+  
+`?`: means 0 or 1 time ({0,1})   
+`*`: means 0 or more time ({0,})   
+`+`: means 1 or more time ({1,})  
+
+--
+
+na**?** will match _n_ or _na_.
+
+na***** will match all of _n_, _na_, _naaa_, etc.
+
+na**+** will match _na_ or _naaaa_, for example, but not _n_.
+
+
+
+---
+
+## Some practice
+
+- Match any characters between two _.
+- Find all the words that contain at least two consecutive vowels.
+- This is a bit harder derives from all previous sections: Match entire words that end in _.
+
+
+.footnote[[Answers in Lecture4](https://pages.github.ubc.ca/mds-2021-22/DSCI_521_platforms-dsci_students/README.html)]
+
+
+---
+
+class: middle, center
+
+&lt;img src="img/2problems.jpg" width="700" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Additional exercises
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+
+- https://regexr.com/    
+- https://regex101.com/
+   
+]
+---
+
+
+## Additional exercises
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+
+* Interactive tutorials and practice sessions at https://regexone.com/ that correspond to the topics we have covered during class.
+    
+* The Library Carpentry organization has many regex exercises in all sections of their regex course here https://librarycarpentry.org/lc-data-intro/ (you can just to do the exercises).
+
+]
+
+---
+
+### Regex is often used in programming languages for matching patterns in strings
+
+&lt;img src="img/rstudio.png" width="600" style="display: block; margin: auto;" /&gt;
+
+.footnote[[String manipulation with stringr - RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)]
+
+---
+
+class: inverse, middle, center
+
+
+## Thank you!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

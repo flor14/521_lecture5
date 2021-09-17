@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>DSCI 521 - Lecture 4</title>
+    <title>DSCI 521 - Lecture 5</title>
     <meta charset="utf-8" />
     <meta name="author" content="MDS 2021/22" />
     <script src="libs/header-attrs/header-attrs.js"></script>
@@ -47,8 +47,8 @@ class: middle, center
 class: bottom
 
 .bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
-### DSCI 521 - Lecture 4
-### **Time travelling with git reset, and pattern matching with regex**
+### DSCI 521 - Lecture 5
+### **RStudio and R Markdown**
 
  .large[#### Computing Platforms for Data Science - UBC MDS 2021/22
 ]]
@@ -56,338 +56,281 @@ class: bottom
 
 ---
 
-## Lecture 4
+## Lecture 5
 
-1. Use git reset to move a branch back in the commit history.
+
+1. RStudio
 
 --
 
-2. Precisely match specific sequences of text strings using regex.
+2. Edit and run R scripts within RStudio
 
+--
+
+3. Create an **RStudio project**
+
+--
+
+4. Compose **RMarkdown** documents
 
 ---
 
 class: center, middle, inverse
 
-# TIME TRAVELLING
-### with _git reset_
+# RSTUDIO
+
 
 ---
 
-### Refer to a commit 
-
-Commit ID or SHA-1 hash
-
-```bash
-commit b22d6421363c7b82e2b88b0b5f1f25edca703303
-
-commit b22d
-```
+### Interactive Development Environment (IDE)
 
 --
 
-## `git log --oneline` 
+## The RStudio interface 
 
 &lt;img src="img/gitlogid.png" width="700" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-### Move to a previous commit
+### R Scripts
 
-```bash
-git reset &lt;commit id&gt;
+To create a new R Script, navigate to `New File -&gt; R Script`. 
+
+
+```R
+x &lt;- 5
+y &lt;- x + 3
+print(paste0("y = ", y))
 ```
+---
 
-**(1) This command changes the commit history**
+### Run the script
 
-.footnote[[Git Docs - Reset, restore and revert](https://git-scm.com/docs/git)]
+You can press the "Source" button to run the entire script (running a script is often referred to as "sourcing" it, hence the name). As you can see, the Console shows you what line it ran in order to source the script (you could also type this out yourself), and then displayed any output from the script in the end. You can run just part of a script by pressing the "Run" button, which runs any highlighted lines (the current line by default, the keyboard shortcut is Ctrl + Enter).
+
 
 ---
 
 ### What happened to the changes? 
 
-**(2) You can edit the changes**
-
-We could now make any modification we wish and then commit again 
-
-&lt;img src="img/reset.png" width="700" style="display: block; margin: auto;" /&gt;
+If a plot is generate from the executed code, it will show up in the "Plots" tab in the bottom left panel. You can try it by adding the following line to the script and clicking to run it (it uses a built-in data set called "cars"):
 
 
 
----
-
-### What if we want to discard the changes instead of moving them to the working area?
-
-```bash
-git reset --hard &lt;sha&gt;
+```r
+plot(cars)
 ```
-It will not show us any message, since the changes are not unstaged, they are **discarded**.
+
+&lt;img src="slides_files/figure-html/obj4-1.png" width="700" style="display: block; margin: auto;" /&gt;
+
+
+
 
 ---
 
 class: middle, center, inverse
 
-## SYNCING WITH A REMOTE AFTER RESETTING
+## Editing RStudio settings to not save workspace data
 
 
 ---
 
-### Git push
+## save workspace data
 
-##### Git will refuse to push changes when the remote is ahead of the local branch.
+In general, we NEVER want to save our workspace (or load a previous one). We can avoid accidentally doing this through turning it off in the RStudio global options in the Tools menu.
 
-
-&lt;img src="img/gitpusherror.png" width="700" style="display: block; margin: auto;" /&gt;
-
-To override this warning and force git to push to the remote
-we can use the **-f/--force** flag.
 ---
 
-## Danger Zone
+## Where we are?
 
-```bash
-git push -f/--force 
-```
+Different from JupyterLab, when you open RStudio you open a .R or .Rmd file the RStudio, the current working directory is not neccesarily the project working directory, or the directory of the file you opened.
 
---
-- Should never do this on the `main` branch of a repository that you **share with collaborators** unless you have all discussed this
+EVERY SESSION you need to tell RStudio where you are working. Especially if you are loading other files outside of your .R or .Rmd file
 
---
 
-- Everyone else who is using this repository are now **out of sync** with the `main` branch, since you have reset master to a previous state
+So, where are you when you open RStudio? You can find out one of two ways:
 
---
+1. type getwd() in the console
 
-**Safer**
-: If you are working alone and you know what you are doing
+2. In the files pane, click the cog/More button and then click "Go To Working Directory"
 
+
+---
+
+## Setting the working directory
+
+You can set the working directory using the following 3 ways:
+
+1. Use an RStudio project (more on this below)
+
+2. In the files pane, navigate the file structure to where you want the working directory to be. Then click the cog/More button and then click "Set As Working Directory"
+
+3. In the Session menu, click Set Working Directory and then Choose Directory. Navigate the opened file browser to choose the directory.
+
+4. Type setwd("PATH") in the console (should be used with care though - see Jenny's article about it.)
 
 ---
 class: middle, center, inverse
  
-# INTRODUCTION TO 
-# REGULAR EXPRESIONS 
-### regex
+# RStudio projects
 
 ---
 
-# .*
-
-### A regular expression, often abbreviated to **regex**, is a method of using a sequence of characters to define a search to match strings, i.e. “find and replace”-like operations. 
+## An RStudio project is essentially a directory containing a special file: *.Rproj, which holds metadata for R about this project. RProjects set the working directory by default to be the root of the project and we recommend using it together with the here() package, which can easily create paths relative to root project dir:
 
 
+```r
+#install.packages("here")
+#library(here)
 
-.footnote[[Library Carpentries](https://librarycarpentry.org/lc-data-intro/01-regular-expressions/)]
----
+# If you data is in project_root/files/data/
+# this will make sure that anyone using your project
+# will get the correct path
+#here("files", "data", "iris.csv")
+```
 
-## JupyterLab and VS Code have built in regex functionality 
-(Ctrl + F)
-
-
-#### VSCode
-
-
-&lt;img src="img/regex.png" width="500" style="display: block; margin: auto;" /&gt;
-#### JupyterLab 
-&lt;img src="img/jupyterLab.png" width="500" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## The square brackets: []
+## Creating RStudio Projects
 
-If you want to specify the set of possible characters you can use square brackets []
+You can either create an empty RStudio project, or clone an existing GitHub repo, which also allows you to use the RStudio interface to control Git.
 
+Start by making a GitHub repo
+Copy the URL needed to clone that repo from GitHub
+Then select File &gt; New Project &gt; Version Control &gt; Git and fill in.
+Now you can use RStudio as a Git client via the colorful icon in the toolbar of the edit panel. This includes adding parts of a document do the staging area, committing, pushing, pulling, and more. Using terminal Git will still be more reliable, since it is available anywhere Git is installed, but feel free to use the RStudio (or VS Code) interfaces as a complement.
 
-`[Aa]`pple 
-
-
-
---
-
-
-#### - Find all the pairs of vowels in the fruit list.
-
-
-
-.footnote[[Answers in Lecture4](https://pages.github.ubc.ca/mds-2021-22/DSCI_521_platforms-dsci_students/README.html)]
 
 ---
 
-## Ranges within []
+class: middle, center, inverse
 
-You can also define ranges when using brackets. 
-
---
-
-`[A-Z]`: will match any upper case letter  
-`[a-z]`: will match any lower case letter  
-`[0-9]`: will match any digit  
-`[0-5]`: will match any digit between 0 and 5  
-
---
-
-.footnote[[Order based in ASCII](https://en.wikipedia.org/wiki/ASCII#Printable_characters)]
+# R Markdown and R Notebooks
 
 ---
 
-## Ranges within []
+R Markdown is a "flavor" of Markdown that allows you to run R code in addition to supporting all the Markdown syntax that you have already learned. R Markdown documents (.Rmd) are most commonly run via R Notebooks which work similarly to Jupyter notebooks in the sense that you can interleave writing code, formatted narrative text, and view output all in the same document. These are both examples of what it called "literate programming" where the goal is to mix code and paragraph text seamlessly.
 
-You can use square brackets starting with a caret. 
-
-`[^A-Z]`: will match anything that is not an upper case letter  
-`[^0-9]`: will match anything that is not a digit
-
-
---
-
-.footnote[Note that the caret needs to be inside the bracket, if it is outside it will match the beginning of a line as described under the "Anchors" section below.]
+Let's see an example of this by creating a new R Notebook via File -&gt; New -&gt; R Notebook. As you can see, there is a default template for Notebooks, which include useful info on how to use them. We can see the keyboard shortcuts for running and inserting cells, and when we execute the plot code the plot shows up inside the notebook rather than in the side panel as when we ran the same line from within the script script.
 
 ---
 
-## Ranges within []
+## Text and rendering R Markdown documents
+In a R Markdown document any line of text not in a code chunk (like this line of text) will be formatted using Markdown. Similar to JupyterLab, you can also use HTML and LaTeX here to do more advanced formatting. Unlike JupyterLab, you do not get to see these Markdown sections rendered on their own. To see this text rendered, you need to render the whole document. You can do that clicking the "Knit" or "Preview" button on the top. The difference between these two is that "Preview" creates a HTML version of your document as it looks right now, whereas "Knit" first restarts the R session and runs through the entire document from the beginning to make sure it will work when you send it to someone else.
 
-You can combine ranges: `[A-Za-z]`.   
 
-#### - What is the difference between writing `[A-Za-z]` and `[A-z]`?
+---
 
---
+
+#### A helpful hint for successfully working with R Markdown documents
+Given that you need to render the entire document to see your Markdown and LaTeX rendered, it is important to "knit" often as you make changes. If you make an error in a LaTeX equation for example, it will stop the knitting/rendering process and you will not get to see the rendered document. So by knitting/rendering often you will know where the last changes you made are and then will be able to easily identify and fix your errors.
+---
+
+## 1.2. Running, editing and creating code chunks
+Just like Jupyter notebooks, R Markdown has code cells, although they're more commonly referred to as code "chunks" or "blocks". These are based off fenced Markdown code blocks and always start and end with 3 backticks (```), just like in Markdown. Unique to R Markdown is that the leading three backticks are followed by curly braces containing the language engine you want to run, which for r looks like this {r}. Additional metadata can be included, for example a name to reference the code chunk:
+
+
+```r
+x &lt;- 5
+x
+```
 
 ```
-!"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`
-abcdefghijklmnopqrstuvwxyz{|}~ 
+## [1] 5
 ```
-&gt; These ranges are ordered based on ASCI codes where every character is represented by a number.  
-&gt; The first character in the list is  (space) and the last is ~ (tilde). 
+There are other language engines that can be used in RMarkdown, you can learn more about that here.
 
-
- `[A-z]` will also match the characters `[/]^_`, as you can see in the list above.  
-
----
-
-## Special matching characters
-
-**.** can be used to match any character in the list above
+All code cells are run when you knit/render the entire document (like pressing "Run all" in JupyterLab). By default, the code in the chunk and the code output will be included in your rendered document. You can also run the code by clicking the green play button on the right-hand side of the code chunk
 
 --
 
-To match a **.**  prefacing it with a backslash `\.`
+## 1.3. Naming code chunks and R Markdown document sections
+When you include Markdown headers (using the # symbol) R Studio automatically creates a pop-up-like menu for you to use to navigate the document, which you can access by clicking the bar below this editor panel. It looks like:
 
-`\w`, which matches any character that normally occurs   
-inside a word (`[A-Za-z0-9_]`)
+By clicking on any of the headings in the pop-up-like menu, RStudio will navigate you to that section of the R Markdown document. Try clicking on one to see how it works.
 
+In addition to Markdown headings, RStudio also keeps track of code chunks in that menu. By default RStudio names the chunks by their position (e.g. Chunk 1, Chunk 2, etc). But in reality those names are not that useful and it is more helpful to give code chunks meaningful names. For example, in the code chunk below where we use a for loop to sum the numbers from 1 to 10, we name the chunk "for loop sum".
+
+
+```r
+# initialize sum to 0
+loop_sum &lt;- 0
+
+# loop of a sequence from 1 to 10 and calculate the sum
+for (i in seq(1:10)){
+  loop_sum &lt;- loop_sum + i
+}
+
+print(loop_sum)
+```
+
+```
+## [1] 55
+```
+Do not duplicate code chunk names, this will break the rendering of your document!
+
+---
+
+## Code snippets
+As we started to type for above, the code completion popped up and the first entry said "snippet", what is that? A code snippet is a text macro, which means that you can type a short string of characters to insert a template or snippet of text by pressing TAB. You can see all the default snippets and define your own by going to Tools -&gt; Global options -&gt; Code -&gt; Edit snippets. Snippets are available anywhere in RStudio, not just in R Markdown documents.
+
+
+---
+
+## 1.4. Code chunk options
+There are many code chunk options that you can set. These options let you customize chunk behavior, including whether a chunk is evaluated, whether to include the output in the rendered document, etc. A short list of code chunk options is shown below, but you can find an extensive list starting on the second page of this document.
+
+You can set the chunk options at either a global level (once set they will be applied to all code chunks in the .Rmd file) or locally for a specific chunk (these will override the global chunk options if they are contradictory).
+
+Global options are usually set in one chunk at the top of the document and looks like this (this is a screenshot):
 
 
 
 ---
 
-## Anchors
+Global chunk options are set by adding them as arguments to knitr::opts_chunk$set(...) (put them in place of ... and separate multiple options with a comma). The only global chunk options set in this document is echo = FALSE, which hides the code chunks and only shows the output, something that can be useful for non-technical reports.
 
-- The **^** (caret) outside the brackets means beginning of line.
-- The dollar sign **$** means end of line
+Local chunk options are set by adding the options in the curly braces of a code chunk after the language engine and code chunk name. For example, to not display warnings in a single code chunk we would use the warning = FALSE code chunk as follows:
 
-Another useful anchor is `\b`, which matches end of word.
 
---
+```
+## [1] NA
+```
+---
 
-&gt; Start with power (^) and end with money ($)   
-&gt; _Jenny Bryan_
+## A few tips and tricks
 
+R Markdown support inline evaluated code via the following syntax
+  Adding 3 to 4 gives 7.
+  The value of `x` is currently 5.
+Latex equations can be written the same way as in Jupyter notebooks and standard markdown documents.
+- `$\alpha = 5$` for inline latex and `$$\alpha = 5$$` for a math block.
+- When hovering over equations,
+  R will display the rendered equation in a pop up.
 
 ---
 
+## A few tips and tricks
 
-&lt;img src="img/regex.jpg" width="500" style="display: block; margin: auto;" /&gt;
-
-
-
----
-
-
-## Repetitions
-
-To match multiple of the same character, you can either repeat it or use the following syntax:
-
-`{n}`: exactly n occurrences  
-`{n,}`: at least n occurrences  
-`{0,m}`: at most m occurrences  
-`{n,m}`: between n and m (inclusive) occurrences  
-
---
-
-#### - Find the fruits with names between 10 and 12 characters.
-#### - Find the lines with no more than 4 letters
+R Markdown is built upon the Pandoc Markdown engine. This is useful to know since the Pandoc manual is a great exhaustive resource for looking up anything Markdown related.
+One of the features made available thanks to Pandoc is support for citations and bibliographies.
+Let's cite the R-package by typing citation() into the console, and copying the BibTex citation into a new document that we call rstudio-demo.bib 
+and adding an identifier string (a key) before the first comma,
+e.g.r-lang`.
 
 ---
 
+## A few tips and tricks
 
-## Special repetition characters
+Include the following field in the YAML metadata in the beginning of the document: bibliography: rstudio-demo.bib, then cite it somewhere in the text by adding [@r-lang]. The bibliography will be appended to the document, so it is advisable to add a heading saying # References at the very end.
+When working with R Markdown (and code in general) be careful that you don't copy stylized quotation marks because these will not work. For example, this will throw an error:
 
-There are some shortcuts for the most common repetitions:  
-  
-`?`: means 0 or 1 time ({0,1})   
-`*`: means 0 or more time ({0,})   
-`+`: means 1 or more time ({1,})  
+a = “This string”
+It should look like this instead:
 
---
-
-na**?** will match _n_ or _na_.
-
-na***** will match all of _n_, _na_, _naaa_, etc.
-
-na**+** will match _na_ or _naaaa_, for example, but not _n_.
-
-
-
----
-
-## Some practice
-
-- Match any characters between two _.
-- Find all the words that contain at least two consecutive vowels.
-- This is a bit harder derives from all previous sections: Match entire words that end in _.
-
-
-.footnote[[Answers in Lecture4](https://pages.github.ubc.ca/mds-2021-22/DSCI_521_platforms-dsci_students/README.html)]
-
-
----
-
-class: middle, center
-
-&lt;img src="img/2problems.jpg" width="700" style="display: block; margin: auto;" /&gt;
-
----
-
-## Additional exercises
-
-.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
-
-- https://regexr.com/    
-- https://regex101.com/
-   
-]
----
-
-
-## Additional exercises
-
-.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
-
-* Interactive tutorials and practice sessions at https://regexone.com/ that correspond to the topics we have covered during class.
-    
-* The Library Carpentry organization has many regex exercises in all sections of their regex course here https://librarycarpentry.org/lc-data-intro/ (you can just to do the exercises).
-
-]
-
----
-
-### Regex is often used in programming languages for matching patterns in strings
-
-&lt;img src="img/rstudio.png" width="600" style="display: block; margin: auto;" /&gt;
-
-.footnote[[String manipulation with stringr - RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)]
-
+a = "This string"
 ---
 
 class: inverse, middle, center

@@ -424,6 +424,7 @@ knitr::include_graphics("img/rmarkdown.png")
 ## Notebooks
 
 - You can interleave writing code, formatted narrative text, and view output all in the same document. 
+--
 
 - Notebooks are examples of what it is called **literate programming** where the goal is to mix code and paragraph text seamlessly.
 
@@ -459,7 +460,7 @@ knitr::include_graphics("img/rnotebook.png")
 - To see this text rendered, you need to render the whole document
 
 ]
-
+--
 .pull-right[
 
 **R Markdown and JupyterLab**
@@ -582,9 +583,9 @@ knitr::include_graphics("img/firstchunk.png")
 
 ---
 
-## Naming code chunks and R Markdown document sections
+### Naming code chunks and R Markdown document sections
 
-- When you include Markdown headers (using the # symbol) R Studio automatically creates a pop-up-like menu for you to use to navigate the document, which you can access by clicking the bar below this editor panel. It looks like:
+- When you include Markdown headers (using the # symbol) R Studio automatically creates a pop-up-like menu for you to use to navigate the document.
 
 ```{r sect, fig.align='center', echo = FALSE,out.width=600} 
 knitr::include_graphics("img/namesections.png")

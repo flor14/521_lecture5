@@ -1,0 +1,599 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{Lab 3 - Introduction to RStudio and R Markdown for reports and
+presentations}
+\author{}
+\date{\vspace{-2.5em}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Lab 3 - Introduction to RStudio and R Markdown for reports and presentations},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{verbatim}
+BEGIN ASSIGNMENT
+requirements: requirements.R
+generate: true
+export_cell: false
+files: 
+  - imgs
+\end{verbatim}
+
+In Lab 3, you will learn how to use, edit and create a R Markdown
+document (like this one) using RStudio. You should follow the
+instructions in this document to complete the assignment. Knit this
+document to view the nicely rendered HTML, which can make it easier to
+read the questions.
+
+If you need help as you use R Markdown in this lab and others in the
+future, consult the following resources:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rmarkdown.rstudio.com/lesson-15.html}{Cheat sheet}
+\item
+  \href{https://rmarkdown.rstudio.com/docs/}{Home page with guides}
+\item
+  \href{https://bookdown.org/yihui/rmarkdown/}{Reference book}
+\end{itemize}
+
+The below is a code chunk, but instead of using the \texttt{r} engine
+we're creating and alert block that will make the question show up with
+a blue background in the HTML output. Unfortunately, this creates and
+error when exporting to PDF, so it can only be used for HTML.
+
+\begin{verbatim}
+BEGIN QUESTION
+name: submission
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{submission-instructions}{%
+\subsection{Submission Instructions}\label{submission-instructions}}
+
+rubric=\{mechanics:2\} You receive mark for submitting your lab
+correctly, please follow these instructions: -
+\href{https://ubc-mds.github.io/resources_pages/general_lab_instructions/}{Follow
+the general lab instructions}. -
+\href{https://github.com/UBC-MDS/public/tree/master/rubric}{Click here
+to view a description of the rubrics used to grade the questions}. -
+Push your \texttt{.Rmd} AND \texttt{.html} file to your GitHub
+repository for this lab. - The reason for pushing both files is that
+\texttt{.Rmd} does not contain the rendered output from running the
+cells. If someone is checking out your work there needs to be an HTML
+file to view the output, so it is good to get into this habit. -
+\texttt{.ipynb} renders nicely on GitHub, which is why we did not
+include the HTML file for previous labs. - Upload a \texttt{.html}
+version of your assignment to Canvas. - Include a clickable link to your
+GitHub repo for the lab just below this cell (it should look something
+like this \url{https://github.ubc.ca/MDS-2020-21/DSCI_521_labX_yourcwl}.
+\end{alert alert-info}
+
+YOUR LAB GITHUB REPO LINK GOES HERE
+
+\begin{quote}
+Solution: Correct link pasted
+\end{quote}
+
+\hypertarget{editing-r-markdown-documents}{%
+\subsection{Editing R Markdown
+documents}\label{editing-r-markdown-documents}}
+
+This document is called an R Markdown document. It is a literate code
+document, similar to Jupyter notebooks where you can write code and view
+its outputs. To start, let's set our working directory by creating a new
+R Project for lab 3.
+
+\hypertarget{text-and-rendering-r-markdown-documents}{%
+\subsubsection{Text and rendering R Markdown
+documents}\label{text-and-rendering-r-markdown-documents}}
+
+In a R Markdown document any line of text not in a code chunk (like this
+line of text) will be formatted using Markdown. Similar to JupyterLab,
+you can also use HTML and LaTeX here to do more advanced formatting. To
+run a code chunk, you can press the green play button in the top right
+corner of the chunk.
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q1
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-1}{%
+\paragraph{Question 1}\label{question-1}}
+
+rubric=\{correctness:1\} Since GitHub does not render HTML files by
+default, you need to preface the raw URL to your rendered HTML files
+with the following in order to view them online:
+\texttt{http://htmlpreview.github.io/?}. Using this approach, include a
+clickable link to your rendered HTML file on GitHub under this question.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Correct link pasted
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q2
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-2}{%
+\paragraph{Question 2}\label{question-2}}
+
+rubric=\{mechanics:1\} Create a new code chunk below using the r
+language engine that runs some R code (it does not need to be
+complicated, but it should have an output). Ensure that you can
+render/knit the document after you add that chunk.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Any valid R code block with an output created.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q3
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-3}{%
+\paragraph{Question 3}\label{question-3}}
+
+rubric=\{mechanics:1\} Create a new code chunk, and add a meaningful
+name both to this and your previous code chunk. Try using the
+pop-up-like menu to navigate between the named code chunks Don't forget
+to knit/render the document after you make this change to ensure
+everything is still working.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Note that students had a slightly different question here
+originally, so they might just have renamed the code block above which
+is fine for this year.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q4
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-4}{%
+\paragraph{Question 4}\label{question-4}}
+
+rubric=\{mechanics:1,reasoning:1\} Create a new code chunk that uses a
+code chunk option. Write out in your own words what the code chunk
+option is doing.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Any valid R code block with a chunk option such as
+\texttt{echo\ =\ FALSE}.
+\end{quote}
+
+\hypertarget{multiple-code-chunk-options}{%
+\paragraph{Multiple code chunk
+options}\label{multiple-code-chunk-options}}
+
+To have multiple code chunk options you separate them by a comma. For
+example, if in addition to suppressing warnings, we want to run the code
+but not output the results, then we can add the
+\texttt{include\ =\ FALSE} argument to the code chunk after the
+\texttt{warning\ =\ FALSE} option.
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q5
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-5}{%
+\paragraph{Question 5}\label{question-5}}
+
+rubric=\{mechanics:1,reasoning:1\} Create a new code chunk that uses at
+least two code chunk options. At least one must be different to the ones
+mentioned above. Write in your own words what each code chunk option is
+doing.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Valid code chunk with two options and correct description.
+\end{quote}
+
+\hypertarget{yaml-header-and-document-output-options}{%
+\subsubsection{1.5. YAML Header and document output
+options}\label{yaml-header-and-document-output-options}}
+
+R Markdown files contains three types of content:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Plain text mixed with simple Markdown formatting.
+\item
+  Code chunks surrounded by ```.
+\item
+  An (optional) YAML header surrounded by \texttt{-\/-\/-}. You have
+  been introduced the first two types of content, but not the third
+  (although you probably saw it at the top of this document). The
+  (optional) YAML header, which is located at the very top of R Markdown
+  files sets some general global parameters, including:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  title
+\item
+  author
+\item
+  output
+\item
+  etc \textbf{Example YAML Header}
+\end{itemize}
+
+\begin{verbatim}
+---
+title: "Reproducible Data Science Report"
+author: "Tiffany Timbers"
+date: "September 4, 2018"
+output: html_document
+---
+\end{verbatim}
+
+Most important from a workflow perspective is \textbf{output}. Possible
+output options include: - \texttt{output:\ html\_document} -
+\texttt{output:\ md\_document} - \texttt{output:\ pdf\_document} -
+\texttt{output:\ word\_document} -
+\texttt{output:\ beamer\_presentation} (beamer slideshow - pdf) -
+\texttt{output:\ xaringan::moon\_reader} (xaringan presentation - html)
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q6
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-6}{%
+\paragraph{Question 6}\label{question-6}}
+
+rubric=\{mechanics:1\} Navigate to the YAML header at the very top of
+this document and edit it so that you include an \texttt{author}
+(yourself) and a \texttt{date} (lab due date). Include what you added
+below here as well as a fenced Markdown code block.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: It is ok if students only modified the header but did not add
+it here since the question was originally different. This might not show
+up in the html, so you will need to check the .Rmd in the repo.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q7
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-7}{%
+\paragraph{Question 7}\label{question-7}}
+
+rubric=\{mechanics:1\} \textbf{This question previously mentioned to
+export the current document (lab3.Rmd). to pdf. This will not work due
+to the blue highlight boxes, so please follow these updated instructions
+instead.} After you have completed Question 8 and pasted the link to the
+HTML output, navigate to the YAML header at the very top of that .Rmd
+document and edit it so that the \texttt{output} is
+\texttt{pdf\_document}. Then knit/render the document. Note the
+different output. Add and commit that rendered \texttt{.pdf} file to the
+GitHub repository for this lab and paste a link to that file below this
+question.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Correctly exported PDf in the repo and a link here.
+\end{quote}
+
+\hypertarget{creating-r-markdown-documents}{%
+\subsubsection{Creating R Markdown
+documents}\label{creating-r-markdown-documents}}
+
+You can use the ``File'' menu inside RStudio to create new R Markdown
+documents by selecting: File \textgreater{} New File \textgreater{} R
+Markdown\ldots{} This will bring you to another menu where you can
+choose the type of output (don't be afraid to pick something, you can
+always change the \texttt{output} type once you have the \texttt{.Rmd}
+file).
+
+To create a written report, we generally recommend using the default
+\texttt{output:\ html\_document} as it is easier to read than PDF (note
+- LaTeX does not render nicely in such documents sadly, so if you are
+using a lot of LaTeX then you may want to choose
+\texttt{output:\ pdf\_document}). If you want to create an \texttt{.md}
+file to publish on GitHub, it is recommend to instead use
+\texttt{output:\ github\_document}. To get this from the menu above you
+need to navigate to the ``From Template'' option on the left panel and
+then select ``GitHub Document (Markdown)''.
+
+To create a presentation we recommend using xaringan. To get a xaringan
+presentation from the File \textgreater{} New File \textgreater{} R
+Markdown\ldots{} menu, you need to navigate to the ``From Template''
+option on the left panel and then select ``Ninja Presentation''. I will
+let the package author explain why it is named that way:
+
+\begin{quote}
+{[}Sharingan is{]} an R package for creating slideshows with remark.js
+through R Markdown. The package name xaringan comes from Sharingan, a
+dojutsu in Naruto with two abilities: the ``Eye of Insight'' and the
+``Eye of Hypnotism''. A presentation ninja should have these basic
+abilities, and I think remark.js may help you acquire these abilities,
+even if you are not a member of the Uchiha clan.
+
+\url{https://github.com/yihui/xaringan} When you create R Markdown
+documents this way, RStudio gives you a template and some reasonable
+defaults to start with to help you get going quickly and easily.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q8
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-8}{%
+\paragraph{Question 8}\label{question-8}}
+
+rubric=\{mechanics:6\} 1. Create a new RMarkdown report (a different
+file than this one) in the same directory as this Markdown file. Use
+\texttt{html\_document} as the \texttt{output}. 2. Create at least two
+Markdown text sections (each should have a header) and at least two
+separate code chunks in it (these can be really simple). Save the new R
+Markdown document and give it a meaningful name. 3. Render/knit the new
+R Markdown document to get an \texttt{.html} file. Put the \texttt{.Rmd}
+document and the rendered \texttt{.html} file under version control
+using Git, and push/upload the file to your GitHub repository for this
+homework. Paste a link to these files as your answer below.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Correctly exported html and Rmd in the repo and a link here.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q9
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-9-optional}{%
+\paragraph{Question 9 (Optional)}\label{question-9-optional}}
+
+rubric=\{mechanics:1,reasoning:1\} 1. Take the R Markdown report created
+in Question 8 and change the output to \texttt{github\_document} and
+render it. Put the rendered \texttt{.md} file under version control
+using Git, and push/upload the file to your GitHub repository for this
+homework. Try to look at the file on GitHub.ubc.ca in your homework
+repo? What do you see? How is it rendered?
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: \texttt{.md} document in the repo. Describe that GitHub
+renders the markdown file.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q10
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{question-10}{%
+\paragraph{Question 10}\label{question-10}}
+
+rubric=\{mechanics:6\} 1. Create a presentation using R Markdown. Do
+this in a different file than this one but in the same directory as this
+Markdown file. Use xaringan (see
+\href{https://bookdown.org/yihui/rmarkdown/xaringan.html}{this
+tutorial}) as the presentation type. Give this file a meaningful name.
+2. Create at least 4 slides. At least two slides must include a code
+chunk (these can be really simple). Save the new R Markdown document. 3.
+Render/knit the new R Markdown document to get a \texttt{html}
+presentation file. 4. Put the new R Markdown document and the rendered
+\texttt{.html} file under version control using Git, and push/upload the
+file to your GitHub repository for this lab 5. Open the \texttt{.html}
+presentation file and print/export to PDF from your browser. Put the PDF
+under version control using Git, and push/upload the file to your GitHub
+repository for this homework (this is so you have a file in your
+homework repo that we can preview). 5. Paste a link to these files
+(\texttt{.Rmd}, .\texttt{html}, and \texttt{.pdf}) as your answer below.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Link to the files, and make sure the exported html and PDF
+looks reasonable.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: q11
+manual: true
+\end{verbatim}
+
+\begin{alert alert-info}
+\hypertarget{optional-question-11}{%
+\paragraph{(Optional) Question 11}\label{optional-question-11}}
+
+rubric=\{reasoning:1\} In a paragraph or two, compare and contrast the
+use of reproducible tools (e.g., R Markdown and Jupyter) and
+non-reproducible tools (Word, Powerpoint, Keynote, etc) for
+presentations and reports. Include advantages and disadvantages for
+each.
+\end{alert alert-info}
+
+YOUR ANSWER GOES HERE
+
+\begin{quote}
+Solution: Reproducible tools often makes it easier to collaborate long
+term and to track changes made by different people as they faciliate
+version control, as well as makes it easier to share and have someone
+else recreate your work and pomotes consistent formatting across slides
+and presentations. Non-reproduciple tools often have a lower barrier of
+entry, especially as people usually have used similar tools before. They
+also allow for live collaboration which is sometimes needed, and to
+create more fine-grained manual edits to graphics, such as image
+placement and aniations in presentations.
+\end{quote}
+
+\begin{verbatim}
+BEGIN QUESTION
+name: placeholder
+manual: false
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Hidden Test \#\#}
+\NormalTok{testthat}\SpecialCharTok{::}\FunctionTok{expect\_true}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

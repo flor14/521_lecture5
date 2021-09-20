@@ -1,0 +1,9 @@
+\hypertarget{question-9-optional}{%
+\paragraph{Question 9 (Optional)}\label{question-9-optional}}
+
+rubric=\{mechanics:1,reasoning:1\} 1. Take the R Markdown report created
+in Question 8 and change the output to \texttt{github\_document} and
+render it. Put the rendered \texttt{.md} file under version control
+using Git, and push/upload the file to your GitHub repository for this
+homework. Try to look at the file on GitHub.ubc.ca in your homework
+repo? What do you see? How is it rendered?

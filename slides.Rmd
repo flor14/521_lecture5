@@ -106,11 +106,11 @@ class: bottom
 ## Lecture 5
 
 
-1. RStudio
+1. Know our way around the **RStudio** interface
 
 --
 
-2. Edit and run R scripts within RStudio
+2. Edit and run **R scripts** within RStudio
 
 --
 
@@ -126,18 +126,53 @@ class: center, middle, inverse
 
 # RSTUDIO
 
+---
+
+## RStudio interface 
+
+```{r rsconsole2, fig.align='center', echo = FALSE,out.width=800} 
+knitr::include_graphics("img/rstudio_open.png")
+```
+
+
 
 ---
 
 ### Interactive Development Environment (IDE)
 
---
+We are already familiar with JupyterLab
 
-## The RStudio interface 
 
-```{r git_log, fig.align='center', echo = FALSE,out.width=700} 
-knitr::include_graphics("img/gitlogid.png")
+
+```{r rsjl, fig.align='center', echo = FALSE,out.width=900} 
+knitr::include_graphics("img/jlab_rstudio.png")
 ```
+
+
+---
+
+### Plots
+
+If a plot is generate from the executed code, it will show up in the **Plots** tab in the bottom left panel. 
+
+
+```{r obj4, fig.align='center', echo = TRUE, out.width=200} 
+plot(cars)
+```
+
+
+
+.footnote[Note: it uses a built-in data set called `cars`]
+
+
+
+
+
+
+
+
+
+
 
 
 ---
@@ -156,147 +191,403 @@ print(paste0("y = ", y))
 
 ### Run the script
 
-You can press the "Source" button to run the entire script (running a script is often referred to as "sourcing" it, hence the name). As you can see, the Console shows you what line it ran in order to source the script (you could also type this out yourself), and then displayed any output from the script in the end. You can run just part of a script by pressing the "Run" button, which runs any highlighted lines (the current line by default, the keyboard shortcut is Ctrl + Enter).
 
+.pull-top[
 
----
-
-### What happened to the changes? 
-
-If a plot is generate from the executed code, it will show up in the "Plots" tab in the bottom left panel. You can try it by adding the following line to the script and clicking to run it (it uses a built-in data set called "cars"):
-
-
-```{r obj4, fig.align='center', echo = TRUE,out.width=700} 
-plot(cars)
+```{r run, fig.align='center', echo = FALSE,out.width=500} 
+knitr::include_graphics("img/run.png")
 ```
 
 
+]
+
+.pull-bottom[
+
+- **Run** button to run just part of a script, which runs any highlighted lines.**Keyboard shortcut: ** `Ctrl + Enter`
+
+- **Source** button to run the entire script 
+ 
+
+
+
+
+]
+
+
+
+
+
 
 
 ---
 
-class: middle, center, inverse
+## RStudio interface 
+
+The editor is open now!
+
+```{r rsconsole, fig.align='center', echo = FALSE,out.width=800} 
+knitr::include_graphics("img/rstudio_ide.png")
+```
+
+
+---
+
+## RStudio interface
+#### Tabs
+
+.pull-left[
+
+```{r rsconsole3, fig.align='center', echo = FALSE,out.width=500} 
+knitr::include_graphics("img/rstudio_ide.png")
+```
+
+
+]
+
+.pull-right[
+
+
+
+- **Editor**  is where you write R code that will be saved as a file.  
+- **Console**  is where R commands are sent and evaluated by R. No R code written here is saved.  
+- **Environment**  shows the currently defined variables.  
+- **Files**  let's you navigate your file system. This panel also has the "Plots" and "Help" tabs which show figures you create and function documentation, respectively.
+
+
+
+]
+---
+
+## RStudio interface 
+
+```{r rs, fig.align='center', echo = FALSE,out.width=550} 
+knitr::include_graphics("img/rscheatsheet.png")
+```
+
+
+.footnote[[RStudio Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)]
+
+---
+
 
 ## Editing RStudio settings to not save workspace data
 
 
+In general, we **NEVER** want to save our workspace (or load a previous one). 
+We can avoid accidentally doing this through turning it off in the RStudio global options in the Tools menu.
+
+
+```{r rdata, fig.align='center', echo = FALSE,out.width=300} 
+knitr::include_graphics("img/rdata.png")
+```
+
 ---
 
-## save workspace data
+## Where we are? 🗺️
 
-In general, we NEVER want to save our workspace (or load a previous one). We can avoid accidentally doing this through turning it off in the RStudio global options in the Tools menu.
+#### Different from JupyterLab
+When you open RStudio the current working directory is not necessarily the project working directory.
+
+--
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+
+#### EVERY SESSION you need to tell RStudio where you are working
+]
 
 ---
 
-## Where we are?
-
-Different from JupyterLab, when you open RStudio you open a .R or .Rmd file the RStudio, the current working directory is not neccesarily the project working directory, or the directory of the file you opened.
-
-EVERY SESSION you need to tell RStudio where you are working. Especially if you are loading other files outside of your .R or .Rmd file
+## Where we are? 🗺
 
 
-So, where are you when you open RStudio? You can find out one of two ways:
 
-1. type getwd() in the console
+You can find out one of two ways:
 
-2. In the files pane, click the cog/More button and then click "Go To Working Directory"
+1. type `getwd()` in the console
+
+2. In the files pane, 
+  - click the cog/More button and then click **"Go To Working Directory"**
 
 
 ---
 
 ## Setting the working directory
 
-You can set the working directory using the following 3 ways:
 
-1. Use an RStudio project (more on this below)
+1. Use an **RStudio project** 
 
-2. In the files pane, navigate the file structure to where you want the working directory to be. Then click the cog/More button and then click "Set As Working Directory"
+--
 
-3. In the Session menu, click Set Working Directory and then Choose Directory. Navigate the opened file browser to choose the directory.
+2. In the _Files pane_
+  - Navigate the file structure to where you want the working directory to be.
+  - Then click the cog/More button and then click **Set As Working Directory**
+  
+--
 
-4. Type setwd("PATH") in the console (should be used with care though - see Jenny's article about it.)
+3. In the _Session menu_, 
+  - Click **Set Working Directory** 
+  - Then **Choose Directory**
+
+--
+
+4. Type `setwd("PATH")` in the _Console_ 
+
+--
+
+.footnote[[🔥 Project oriented workflow 🔥 - Jenny Bryan](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)]
 
 ---
+
+
 class: middle, center, inverse
  
 # RStudio projects
 
 ---
 
-## An RStudio project is essentially a directory containing a special file: *.Rproj, which holds metadata for R about this project. RProjects set the working directory by default to be the root of the project and we recommend using it together with the here() package, which can easily create paths relative to root project dir:
 
-```{r}
+class: middle
 
-#install.packages("here")
-#library(here)
-
-# If you data is in project_root/files/data/
-# this will make sure that anyone using your project
-# will get the correct path
-#here("files", "data", "iris.csv")
-
-
-```
+### An RStudio project is essentially a directory containing a special file: `*.Rproj`, which holds metadata for R about this project.
 
 
 ---
 
 ## Creating RStudio Projects
 
+
 You can either create an empty RStudio project, or clone an existing GitHub repo, which also allows you to use the RStudio interface to control Git.
 
-Start by making a GitHub repo
-Copy the URL needed to clone that repo from GitHub
-Then select File > New Project > Version Control > Git and fill in.
-Now you can use RStudio as a Git client via the colorful icon in the toolbar of the edit panel. This includes adding parts of a document do the staging area, committing, pushing, pulling, and more. Using terminal Git will still be more reliable, since it is available anywhere Git is installed, but feel free to use the RStudio (or VS Code) interfaces as a complement.
+```{r pj, fig.align='center', echo = FALSE,out.width=300} 
+knitr::include_graphics("img/pj.png")
+```
+---
+
+## RProjects set the working directory by default
+
+We recommend using it together with the `here()` package, which can easily create paths relative to root project dir:
+
+```{r eval=FALSE, include=TRUE}
+
+install.packages("here")
+library(here)
+
+# If you data is in project_root/files/data/
+# this will make sure that anyone using your project
+# will get the correct path
+ here("files", "data", "iris.csv")
+
+
+```
+
+
+
 
 
 ---
 
 class: middle, center, inverse
 
-# R Markdown and R Notebooks
-
----
-
-R Markdown is a "flavor" of Markdown that allows you to run R code in addition to supporting all the Markdown syntax that you have already learned. R Markdown documents (.Rmd) are most commonly run via R Notebooks which work similarly to Jupyter notebooks in the sense that you can interleave writing code, formatted narrative text, and view output all in the same document. These are both examples of what it called "literate programming" where the goal is to mix code and paragraph text seamlessly.
-
-Let's see an example of this by creating a new R Notebook via File -> New -> R Notebook. As you can see, there is a default template for Notebooks, which include useful info on how to use them. We can see the keyboard shortcuts for running and inserting cells, and when we execute the plot code the plot shows up inside the notebook rather than in the side panel as when we ran the same line from within the script script.
-
----
-
-## Text and rendering R Markdown documents
-In a R Markdown document any line of text not in a code chunk (like this line of text) will be formatted using Markdown. Similar to JupyterLab, you can also use HTML and LaTeX here to do more advanced formatting. Unlike JupyterLab, you do not get to see these Markdown sections rendered on their own. To see this text rendered, you need to render the whole document. You can do that clicking the "Knit" or "Preview" button on the top. The difference between these two is that "Preview" creates a HTML version of your document as it looks right now, whereas "Knit" first restarts the R session and runs through the entire document from the beginning to make sure it will work when you send it to someone else.
+# R Markdown and   
+# R Notebooks
 
 
 ---
 
+## Notebooks
 
-#### A helpful hint for successfully working with R Markdown documents
-Given that you need to render the entire document to see your Markdown and LaTeX rendered, it is important to "knit" often as you make changes. If you make an error in a LaTeX equation for example, it will stop the knitting/rendering process and you will not get to see the rendered document. So by knitting/rendering often you will know where the last changes you made are and then will be able to easily identify and fix your errors.
+- You can interleave writing code, formatted narrative text, and view output all in the same document. 
+
+- Notebooks are examples of what it is called **literate programming** where the goal is to mix code and paragraph text seamlessly.
+
+#### Notebooks
+Jupyter Notebooks ✔️  
+  
+ <span style="background-color:#00FF00">R Markdown Notebooks</span>
+
 ---
 
-## 1.2. Running, editing and creating code chunks
-Just like Jupyter notebooks, R Markdown has code cells, although they're more commonly referred to as code "chunks" or "blocks". These are based off fenced Markdown code blocks and always start and end with 3 backticks (```), just like in Markdown. Unique to R Markdown is that the leading three backticks are followed by curly braces containing the language engine you want to run, which for r looks like this {r}. Additional metadata can be included, for example a name to reference the code chunk:
+### R Markdown documents 
 
-```{r my first code chunk}
-x <- 5
-x
+**R Markdown documents (.Rmd)** are most commonly run via R Notebooks which work similarly to Jupyter notebooks 
+  
+##### Let's see an example of this by creating a new R Notebook via `File -> New -> R Notebook`. 
+
+
+
+
+```{r rmd, fig.align='left', echo = FALSE,out.width=100} 
+knitr::include_graphics("img/rmarkdown.png")
 ```
-There are other language engines that can be used in RMarkdown, you can learn more about that here.
 
-All code cells are run when you knit/render the entire document (like pressing "Run all" in JupyterLab). By default, the code in the chunk and the code output will be included in your rendered document. You can also run the code by clicking the green play button on the right-hand side of the code chunk
+
+.footnote[[What is the difference between a Notebook and an R Markdown file?](https://argoshare.is.ed.ac.uk/healthyr_book/what-is-the-difference-between-a-notebook-and-an-r-markdown-file.html)]
+
+---
+
+## R Markdown
+
+We are going to learn with more detail the parts of an R Markdown file in lab3
+
+```{r rnotebooks, fig.align='center', echo = FALSE,out.width=800} 
+knitr::include_graphics("img/rnotebook.png")
+```
+
+
+.footnote[[R Markdown](https://rmarkdown.rstudio.com/)]
+
+---
+
+### Text and rendering R Markdown documents
+
+
+.pull-left[
+
+**R Markdown only**
+- Any line of text not in a code chunk will be formatted using Markdown. 
+- To see this text rendered, you need to render the whole document
+
+]
+
+.pull-right[
+
+**R Markdown and JupyterLab**
+
+- You can use HTML and LaTeX here to do more advanced formatting. 
+
+]
+
 
 --
 
-## 1.3. Naming code chunks and R Markdown document sections
-When you include Markdown headers (using the # symbol) R Studio automatically creates a pop-up-like menu for you to use to navigate the document, which you can access by clicking the bar below this editor panel. It looks like:
+#### "Knit" or "Preview" button?
+  - **Preview** creates a HTML version of your document as it looks right now
+  - **Knit** first restarts the R session and runs through the entire document from the beginning to make sure it will work when you send it to someone else.
 
-By clicking on any of the headings in the pop-up-like menu, RStudio will navigate you to that section of the R Markdown document. Try clicking on one to see how it works.
 
-In addition to Markdown headings, RStudio also keeps track of code chunks in that menu. By default RStudio names the chunks by their position (e.g. Chunk 1, Chunk 2, etc). But in reality those names are not that useful and it is more helpful to give code chunks meaningful names. For example, in the code chunk below where we use a for loop to sum the numbers from 1 to 10, we name the chunk "for loop sum".
+---
 
-```{r for loop sum}
+### A helpful hint 
+#### for successfully working with R Markdown documents
+
+
+##### - it is important to "knit" often as you make changes.
+
+
+.footnote[This is similar to run "Run all cells" in Jupyter Notebooks]
+
+---
+
+## Jupyter Notebooks are stored in JSON format
+
+
+.pull-left[
+
+```{r json, fig.align='center', echo = FALSE,out.width=600} 
+knitr::include_graphics("img/editjson.png")
+```
+]
+
+.pull-right[
+
+- Difficult to edit as plain text
+- Merge conflicts are more complicated to solve  
+
+When you save a file in `.ipynb` format you are saving a .JSON too.
+
+]
+ 
+---
+
+## JupyText
+
+It is a plugin that can save **Jupyter notebooks** as either Markdown files or Scripts in many languages!
+
+- Install JupyText
+- Open the Command Palette and look for Paired Notebooks
+
+
+
+
+.footnote[[JupyText](https://github.com/mwouts/jupytext)]
+
+---
+
+### Running, editing and creating code chunks
+
+#### Code cells
+
+
+.pull-left[
+
+**R Markdown**
+- Referred to as code "chunks" or "blocks" 
+- To see this text rendered, you need to render the whole document
+
+]
+
+.pull-right[
+
+**R Markdown and Jupyter Lab**
+
+- You can use HTML and LaTeX here to do more advanced formatting. 
+
+]
+
+---
+
+### Running, editing and creating code chunks
+
+
+- R Markdown has code cells, although they're more commonly referred to as **code "chunks"** or "blocks". 
+
+--
+
+- Unique to R Markdown is that the leading three backticks are followed by curly braces containing the language engine you want to run.
+
+--
+
+
+```{r my first code chunk}
+x <- 5
+
+```  
+
+
+---
+
+### Running, editing and creating code chunks
+
+- All code cells are run when you knit/render the entire document (like pressing "Run all" in JupyterLab). 
+
+--
+
+- By default, the code in the chunk and the code output will be included in your rendered document.
+
+--
+
+- You can also run the code by clicking the green play button on the right-hand side of the code chunk.
+
+---
+
+## Naming code chunks and R Markdown document sections
+
+- When you include Markdown headers (using the # symbol) R Studio automatically creates a pop-up-like menu for you to use to navigate the document, which you can access by clicking the bar below this editor panel. It looks like:
+
+```{r sect, fig.align='center', echo = FALSE,out.width=600} 
+knitr::include_graphics("img/namesections.png")
+```
+
+---
+
+## Naming code chunks and R Markdown document sections
+
+
+
+- **Do not duplicate code chunk names**, this will break the rendering of your document!
+
+
+```{r for loop sum, eval=FALSE, include=TRUE}
 # initialize sum to 0
 loop_sum <- 0
 
@@ -307,22 +598,53 @@ for (i in seq(1:10)){
 
 print(loop_sum)
 ```
-Do not duplicate code chunk names, this will break the rendering of your document!
-
 ---
 
 ## Code snippets
-As we started to type for above, the code completion popped up and the first entry said "snippet", what is that? A code snippet is a text macro, which means that you can type a short string of characters to insert a template or snippet of text by pressing TAB. You can see all the default snippets and define your own by going to Tools -> Global options -> Code -> Edit snippets. Snippets are available anywhere in RStudio, not just in R Markdown documents.
+As we started to type for above, the code completion popped up and the first entry said "snippet", what is that? A code snippet is a text macro, which means that you can type a short string of characters to insert a template or snippet of text by pressing TAB. You can see all the default snippets and define your own by going to `Tools -> Global options -> Code -> Edit snippets`.
+Snippets are available anywhere in RStudio, not just in R Markdown documents.
+
+
+
+```{r spts, fig.align='left', echo = FALSE,out.width=300} 
+knitr::include_graphics("img/snippets.png")
+```
+---
+
+## Code snippets
+```{r spts2, fig.align='left', echo = FALSE,out.width=600} 
+knitr::include_graphics("img/snippets2.png")
+```
 
 
 ---
 
-## 1.4. Code chunk options
+## Code chunk options
 There are many code chunk options that you can set. These options let you customize chunk behavior, including whether a chunk is evaluated, whether to include the output in the rendered document, etc. A short list of code chunk options is shown below, but you can find an extensive list starting on the second page of this document.
 
 You can set the chunk options at either a global level (once set they will be applied to all code chunks in the .Rmd file) or locally for a specific chunk (these will override the global chunk options if they are contradictory).
 
 Global options are usually set in one chunk at the top of the document and looks like this (this is a screenshot):
+
+```{r chunk, fig.align='left', echo = FALSE,out.width=500} 
+knitr::include_graphics("img/chunk_options.png")
+```
+
+.footnote[[Chunk options and package options](https://yihui.org/knitr/options/)]
+
+---
+
+
+## Code chunk options
+
+
+- **Global chunk options** are set by adding them as arguments to `knitr::opts_chunk$set(...)` (put them in place of ... and separate multiple options with a comma). The only global chunk options set in this document is `echo = FALSE`, which hides the code chunks and only shows the output, something that can be useful for non-technical reports.
+
+--
+
+- **Local chunk options** are set by adding the options in the curly braces of a code chunk after the language engine and code chunk name. For example, to not display warnings in a single code chunk we would use the `warning = FALSE` code chunk as follows:
+
+--
 
 ```{r setup2, include=FALSE, echo = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -330,36 +652,33 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ---
 
-Global chunk options are set by adding them as arguments to knitr::opts_chunk$set(...) (put them in place of ... and separate multiple options with a comma). The only global chunk options set in this document is echo = FALSE, which hides the code chunks and only shows the output, something that can be useful for non-technical reports.
-
-Local chunk options are set by adding the options in the curly braces of a code chunk after the language engine and code chunk name. For example, to not display warnings in a single code chunk we would use the warning = FALSE code chunk as follows:
-
-```{r correlation no warning, warning = FALSE}
-# some R code that throws a warning
-cor( c( 1 , 1 ), c( 2 , 3 ) )
-```
----
-
 ## A few tips and tricks
 
-R Markdown support inline evaluated code via the following syntax
-  Adding 3 to 4 gives `r 4 + 3`.
-  The value of `x` is currently `r x`.
-Latex equations can be written the same way as in Jupyter notebooks and standard markdown documents.
+##### R Markdown support **inline evaluated code** via the following syntax
+  - Adding 3 to 4 gives `r 4 + 3`.
+  - The value of `x` is currently `r x`.  
+  
+--
+
+##### Latex equations can be written the same way as in Jupyter notebooks and standard markdown documents.
 - `$\alpha = 5$` for inline latex and `$$\alpha = 5$$` for a math block.
-- When hovering over equations,
-  R will display the rendered equation in a pop up.
+- When hovering over equations, R will display the rendered equation in a pop up.
 
 ---
 
 ## A few tips and tricks
 
-R Markdown is built upon the Pandoc Markdown engine. This is useful to know since the Pandoc manual is a great exhaustive resource for looking up anything Markdown related.
-One of the features made available thanks to Pandoc is support for citations and bibliographies.
-Let's cite the R-package by typing citation() into the console, and copying the BibTex citation into a new document that we call rstudio-demo.bib 
+##### R Markdown is built upon the **Pandoc** Markdown engine. 
+
+- This is useful to know since the Pandoc manual is a great exhaustive resource for looking up anything Markdown related.
+
+- One of the features made available thanks to Pandoc is support for **citations and bibliographies**.
+  - Let's cite the R-package by typing `citation()` into the console, and copying the BibTex citation into a new document that we call `rstudio-demo.bib` 
 and adding an identifier string (a key) before the first comma,
 e.g.r-lang`.
 
+
+.footnote[[Pandoc](https://pandoc.org/)]
 ---
 
 ## A few tips and tricks
@@ -367,13 +686,40 @@ e.g.r-lang`.
 Include the following field in the YAML metadata in the beginning of the document: bibliography: rstudio-demo.bib, then cite it somewhere in the text by adding [@r-lang]. The bibliography will be appended to the document, so it is advisable to add a heading saying # References at the very end.
 When working with R Markdown (and code in general) be careful that you don't copy stylized quotation marks because these will not work. For example, this will throw an error:
 
-a = “This string”
+a = **“**This string**”**
 It should look like this instead:
 
-a = "This string"
+a = **"**This string**"**
+
+
+
+---
+
+## References
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+
+ [Elegant, flexible, and fast dynamic report generation with R](https://yihui.org/knitr/)
+
+ [JupyText](https://github.com/mwouts/jupytext)
+
+ [Pandoc](https://pandoc.org/)
+ 
+ [R Markdown documents](https://rmarkdown.rstudio.com/)
+
+ [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+
+
+]
+
 ---
 
 class: inverse, middle, center
 
 
 ## Thank you!
+
+
+
+
+

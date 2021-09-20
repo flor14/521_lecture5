@@ -348,6 +348,9 @@ class: middle, center, inverse
 
 class: middle
 
+
+# 📁
+
 ### An RStudio project is essentially a directory containing a special file: `*.Rproj`, which holds metadata for R about this project.
 
 
@@ -388,9 +391,33 @@ library(here)
 
 class: middle, center, inverse
 
-# R Markdown and   
+# R Markdown 
+### and   
 # R Notebooks
 
+
+
+---
+
+### R Markdown documents (.Rmd)
+
+```{r rmd, fig.align='left', echo = FALSE,out.width=100} 
+knitr::include_graphics("img/rmarkdown.png")
+```
+
+
+- R Markdown is a "flavor" of Markdown that allows you to run R code in addition to supporting all the **Markdown syntax**.
+
+--
+- **R Markdown documents (.Rmd)** are most commonly run via **R Notebooks** which work similarly to Jupyter notebooks 
+  
+--
+  
+#### Let's see an example of this by creating a new R Notebook via  
+##### `File -> New -> R Notebook`. 
+
+
+.footnote[[What is the difference between a Notebook and an R Markdown file?](https://argoshare.is.ed.ac.uk/healthyr_book/what-is-the-difference-between-a-notebook-and-an-r-markdown-file.html)]
 
 ---
 
@@ -400,34 +427,18 @@ class: middle, center, inverse
 
 - Notebooks are examples of what it is called **literate programming** where the goal is to mix code and paragraph text seamlessly.
 
+--
+
 #### Notebooks
 Jupyter Notebooks ✔️  
   
  <span style="background-color:#00FF00">R Markdown Notebooks</span>
 
----
 
-### R Markdown documents 
-
-**R Markdown documents (.Rmd)** are most commonly run via R Notebooks which work similarly to Jupyter notebooks 
-  
-##### Let's see an example of this by creating a new R Notebook via `File -> New -> R Notebook`. 
-
-
-
-
-```{r rmd, fig.align='left', echo = FALSE,out.width=100} 
-knitr::include_graphics("img/rmarkdown.png")
-```
-
-
-.footnote[[What is the difference between a Notebook and an R Markdown file?](https://argoshare.is.ed.ac.uk/healthyr_book/what-is-the-difference-between-a-notebook-and-an-r-markdown-file.html)]
 
 ---
 
-## R Markdown
-
-We are going to learn with more detail the parts of an R Markdown file in lab3
+### R Markdown
 
 ```{r rnotebooks, fig.align='center', echo = FALSE,out.width=800} 
 knitr::include_graphics("img/rnotebook.png")
@@ -458,27 +469,26 @@ knitr::include_graphics("img/rnotebook.png")
 ]
 
 
---
+---
 
-#### "Knit" or "Preview" button?
+
+### A helpful hint for successfully working with R Markdown documents
+
+#### "Knit" or "Preview" button? 🧶
   - **Preview** creates a HTML version of your document as it looks right now
   - **Knit** first restarts the R session and runs through the entire document from the beginning to make sure it will work when you send it to someone else.
 
 
----
 
-### A helpful hint 
-#### for successfully working with R Markdown documents
-
-
-##### - it is important to "knit" often as you make changes.
-
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+#### it is important to "knit" often as you make changes.
+]
 
 .footnote[This is similar to run "Run all cells" in Jupyter Notebooks]
 
 ---
 
-## Jupyter Notebooks are stored in JSON format
+### Jupyter Notebooks are stored in JSON format
 
 
 .pull-left[
@@ -493,8 +503,6 @@ knitr::include_graphics("img/editjson.png")
 - Difficult to edit as plain text
 - Merge conflicts are more complicated to solve  
 
-When you save a file in `.ipynb` format you are saving a .JSON too.
-
 ]
  
 ---
@@ -503,8 +511,10 @@ When you save a file in `.ipynb` format you are saving a .JSON too.
 
 It is a plugin that can save **Jupyter notebooks** as either Markdown files or Scripts in many languages!
 
+--
+
 - Install JupyText
-- Open the Command Palette and look for Paired Notebooks
+- Open the Command Palette -> Paired Notebooks
 
 
 
@@ -526,6 +536,8 @@ It is a plugin that can save **Jupyter notebooks** as either Markdown files or S
 
 ]
 
+--
+
 .pull-right[
 
 **R Markdown and Jupyter Lab**
@@ -543,30 +555,30 @@ It is a plugin that can save **Jupyter notebooks** as either Markdown files or S
 
 --
 
-- Unique to R Markdown is that the leading three backticks are followed by curly braces containing the language engine you want to run.
+- Unique to R Markdown is that the leading three backticks are **followed by curly braces** containing the language engine you want to run.
 
 --
 
 
-```{r my first code chunk}
-x <- 5
 
-```  
+```{r 1stch, fig.align='left', echo = FALSE,out.width=300} 
+knitr::include_graphics("img/firstchunk.png")
+``` 
 
 
 ---
 
 ### Running, editing and creating code chunks
 
-- All code cells are run when you knit/render the entire document (like pressing "Run all" in JupyterLab). 
+- All code cells are run when you **knit/render the entire document** (like pressing "Run all" in JupyterLab). 
 
 --
 
-- By default, the code in the chunk and the code output will be included in your rendered document.
+- By default, the code in the chunk and **the code output will be included** in your rendered document.
 
 --
 
-- You can also run the code by clicking the green play button on the right-hand side of the code chunk.
+- You can also run the code by clicking **the green play button** on the right-hand side of the code chunk.
 
 ---
 
@@ -580,35 +592,32 @@ knitr::include_graphics("img/namesections.png")
 
 ---
 
-## Naming code chunks and R Markdown document sections
+### Naming code chunks and R Markdown document sections
 
 
 
 - **Do not duplicate code chunk names**, this will break the rendering of your document!
 
 
-```{r for loop sum, eval=FALSE, include=TRUE}
-# initialize sum to 0
-loop_sum <- 0
-
-# loop of a sequence from 1 to 10 and calculate the sum
-for (i in seq(1:10)){
-  loop_sum <- loop_sum + i
-}
-
-print(loop_sum)
+```{r cname, fig.align='center', echo = FALSE,out.width=600} 
+knitr::include_graphics("img/chunkname.png")
 ```
+
 ---
 
 ## Code snippets
-As we started to type for above, the code completion popped up and the first entry said "snippet", what is that? A code snippet is a text macro, which means that you can type a short string of characters to insert a template or snippet of text by pressing TAB. You can see all the default snippets and define your own by going to `Tools -> Global options -> Code -> Edit snippets`.
+
+`Tools -> Global options -> Code -> Edit snippets`
+A code snippet is a text macro, which means that you can type a short string of characters to insert a template or snippet of text by pressing TAB.  
+
+
+```{r spts, fig.align='center', echo = FALSE,out.width=300} 
+knitr::include_graphics("img/snippets.png")
+
+```
+
 Snippets are available anywhere in RStudio, not just in R Markdown documents.
 
-
-
-```{r spts, fig.align='left', echo = FALSE,out.width=300} 
-knitr::include_graphics("img/snippets.png")
-```
 ---
 
 ## Code snippets
@@ -620,13 +629,11 @@ knitr::include_graphics("img/snippets2.png")
 ---
 
 ## Code chunk options
-There are many code chunk options that you can set. These options let you customize chunk behavior, including whether a chunk is evaluated, whether to include the output in the rendered document, etc. A short list of code chunk options is shown below, but you can find an extensive list starting on the second page of this document.
 
-You can set the chunk options at either a global level (once set they will be applied to all code chunks in the .Rmd file) or locally for a specific chunk (these will override the global chunk options if they are contradictory).
+There are many code chunk options that you can set. These options let you customize chunk behavior, including whether a chunk is evaluated, whether to include the output in the rendered document, etc. 
 
-Global options are usually set in one chunk at the top of the document and looks like this (this is a screenshot):
 
-```{r chunk, fig.align='left', echo = FALSE,out.width=500} 
+```{r chunk2, fig.align='left', echo = FALSE,out.width=500} 
 knitr::include_graphics("img/chunk_options.png")
 ```
 
@@ -637,26 +644,38 @@ knitr::include_graphics("img/chunk_options.png")
 
 ## Code chunk options
 
-
-- **Global chunk options** are set by adding them as arguments to `knitr::opts_chunk$set(...)` (put them in place of ... and separate multiple options with a comma). The only global chunk options set in this document is `echo = FALSE`, which hides the code chunks and only shows the output, something that can be useful for non-technical reports.
-
---
-
-- **Local chunk options** are set by adding the options in the curly braces of a code chunk after the language engine and code chunk name. For example, to not display warnings in a single code chunk we would use the `warning = FALSE` code chunk as follows:
+#### You can set the chunk options at **global level** or **locally for a specific chunk** 
 
 --
 
-```{r setup2, include=FALSE, echo = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+- **Global chunk options** are set by adding them as arguments to `knitr::opts_chunk$set(...)` 
+
+--
+
+- **Local chunk options** are set by adding the options in the curly braces of a code chunk after the language engine and code chunk name. 
+
+
+
+```{r chunkopt2, fig.align='left', out.width=500} 
+knitr::include_graphics("img/chunkop.png")
+
 ```
 
----
 
+---
 ## A few tips and tricks
 
 ##### R Markdown support **inline evaluated code** via the following syntax
+
+
+```{r eval=FALSE, include=TRUE}
+
   - Adding 3 to 4 gives `r 4 + 3`.
   - The value of `x` is currently `r x`.  
+```
+
+
+
   
 --
 
@@ -672,26 +691,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - This is useful to know since the Pandoc manual is a great exhaustive resource for looking up anything Markdown related.
 
-- One of the features made available thanks to Pandoc is support for **citations and bibliographies**.
-  - Let's cite the R-package by typing `citation()` into the console, and copying the BibTex citation into a new document that we call `rstudio-demo.bib` 
-and adding an identifier string (a key) before the first comma,
-e.g.r-lang`.
 
 
 .footnote[[Pandoc](https://pandoc.org/)]
----
-
-## A few tips and tricks
-
-Include the following field in the YAML metadata in the beginning of the document: bibliography: rstudio-demo.bib, then cite it somewhere in the text by adding [@r-lang]. The bibliography will be appended to the document, so it is advisable to add a heading saying # References at the very end.
-When working with R Markdown (and code in general) be careful that you don't copy stylized quotation marks because these will not work. For example, this will throw an error:
-
-a = **“**This string**”**
-It should look like this instead:
-
-a = **"**This string**"**
-
-
 
 ---
 
